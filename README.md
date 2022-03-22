@@ -62,5 +62,31 @@ module.exports = config
 
 #### 清理./dist文件夹
 
+每次 **npm run build**,都会在 <b>./dist</b> 文件夹下面生成打包后的文件。这样多次打包后的 <b>./dist</b> 文件夹下面就会很混乱，或许还会存在我们不需要的文件。最佳实战是每次打包前都清除 <b>./dist</b> 文件夹下面的内容。在配置文件下添加以下内容即可实现。
+
+
+```javascript
+// webpack.config.js
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+
+const config = {
+    ...
+    output: {
+        // filename:"main.min.js",
+        filename:"[name].min.js",
+        path:path.resolve(__dirname,"dist"),
+        clean:true // 简单的一句，即可实现每次打包前清除./dist文件夹下的文件。
+    },
+    ...
+}
+
+module.exports = config
+
+```
+
+可以在 <b>./dist</b> 文件夹下创建一些无关的文件，再次打包，可以看见 <b>./dist</b> 文件夹下创建的无关文件被删除了。
+
+
 
 
