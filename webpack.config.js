@@ -1,4 +1,5 @@
 const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 const config = {
     // entry:"./src/index.js",
@@ -25,7 +26,12 @@ const config = {
                 type:"asset/resource"
             }
         ]
-    }
+    },
+    plugins:[
+        new HtmlWebpackPlugin({
+            title:"hello webpack", // 对应于生成的html的标题
+        })
+    ]
 }
 
 module.exports = config
