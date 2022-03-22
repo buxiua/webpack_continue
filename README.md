@@ -138,10 +138,58 @@ module.exports = config
 打包后再次在浏览器中打开html
 
 ```
-error.js:1     
+error.js:1 
+        
        something error
 905 @ error.js:1
-
+o @ bootstrap:19
+(匿名) @ print.min.js:1
+(匿名) @ print.min.js:1
+(匿名) @ print.min.js:1
 ```
 
 浏览器控制台准确给出错误在哪个文件（error.js）以及在哪一行（1）。
+
+
+---
+#### 使用 webpack-dev-server
+
+每次我们编写了一部分功能后，都要重新打包并打开html文件来查看是否达到自己想要的效果，并对此进行修正。每次都要打包十分不便，于是乎我们就可以使用**webpack-dev-server**，**webpack-dev-server** 为我们提供了一个基本的 **web server**，并且具有 **live reloading**(实时重新加载) 功能。
+
+首先我们需要引入 **webpack-dev-server**
+```bash
+npm i webpack-dev-server -S
+```
+
+然后在配置文件中进行相关的配置：
+```javascript
+// webpack.config.js
+...
+
+const config = {
+    ...
+    devServer:{
+        static:"./dist", //devServer,将./dist文件作为静态文件部分发布出去。 
+    },
+    ...
+}
+
+...
+
+```
+
+在 **package.json** 中添加运行脚本
+```json
+{
+  ...
+  "scripts": {
+    ...
+    "serve": "webpack serve --open" // 添加这一句
+  },
+  ...
+}
+
+```
+
+开始运行 **npm run serve**
+

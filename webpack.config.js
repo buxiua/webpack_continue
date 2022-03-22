@@ -14,6 +14,9 @@ const config = {
         clean:true
     },
     devtool:"inline-source-map", // 使用source map，更好的定位错误
+    devServer:{
+        static:"./dist", //devServer,将./dist文件作为静态文件部分发布出去。 
+    },
     module:{
         rules:[
             {
