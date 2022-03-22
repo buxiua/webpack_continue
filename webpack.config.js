@@ -13,6 +13,7 @@ const config = {
         path:path.resolve(__dirname,"dist"),
         clean:true
     },
+    devtool:"inline-source-map", // 使用source map，更好的定位错误
     module:{
         rules:[
             {
