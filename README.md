@@ -193,3 +193,56 @@ const config = {
 
 开始运行 **npm run serve**
 
+```bash
+> webpack-demo@1.0.0 serve C:\Users\17947\Desktop\webpackDemo
+> webpack serve --open
+
+<i> [webpack-dev-server] Project is running at:
+<i> [webpack-dev-server] Loopback: http://localhost:8080/
+<i> [webpack-dev-server] On Your Network (IPv4): http://172.27.74.63:8080/
+<i> [webpack-dev-server] On Your Network (IPv6): http://[fe80::c489:a5c7:2749:9a02]:8080/
+<i> [webpack-dev-server] Content not from webpack is served from './dist' directory
+<i> [webpack-dev-middleware] wait until bundle finished: /
+assets by status 1.09 MiB [big]
+  asset main.min.js 577 KiB [emitted] [minimized] [big] (name: main) 1 related asset
+  asset print.min.js 543 KiB [emitted] [minimized] [big] (name: print) 1 related asset
+asset 5ba24ebe3fc943c0b457.webp 48.2 KiB [emitted] [immutable] [from: src/image/gao.webp] (auxiliary name: main)
+asset index.html 270 bytes [emitted]
+runtime modules 54 KiB 24 modules
+orphan modules 17.2 KiB [orphan] 7 modules
+cacheable modules 174 KiB (javascript) 48.2 KiB (asset)
+  modules by path ./node_modules/ 170 KiB 23 modules
+  modules by path ./src/ 4.37 KiB (javascript) 48.2 KiB (asset)
+    modules by path ./src/*.js 404 bytes 2 modules
+    modules by path ./src/css/*.css 3.75 KiB 2 modules
+    modules by path ./src/js/*.js 189 bytes 2 modules
+    ./src/image/gao.webp 42 bytes (javascript) 48.2 KiB (asset) [built] [code generated]
+
+WARNING in configuration
+The 'mode' option has not been set, webpack will fallback to 'production' for this value.
+Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
+You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/configuration/mode/
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets:
+  main.min.js (577 KiB)
+  print.min.js (543 KiB)
+
+WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+Entrypoints:
+  main (577 KiB)
+      main.min.js
+  print (543 KiB)
+      print.min.js
+
+
+WARNING in webpack performance recommendations: 
+You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+For more info visit https://webpack.js.org/guides/code-splitting/
+
+webpack 5.70.0 compiled with 4 warnings in 5543 ms
+
+```
+
+当我们修改相关的文件，webpack-dev-server就会自动打包构建。

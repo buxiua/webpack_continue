@@ -12,3 +12,4 @@ document.body.appendChild(imageEl)
 let el = fun();
 el.innerHTML="hello webpack!!!";
 el.classList.add("hello")
+console.log("hello world")
