@@ -27,7 +27,7 @@ module.exports = config
 
 ```
 
-如上进行配置，将**entry**改写为object，**filename**使用有占位符([name])的string,**[name]**在最终打包的时候，最终将被替换为对应于object的key值。
+如上进行配置，将**entry**改写为object，**filename**使用有占位符([name])的string, **[name]** 在最终打包的时候，最终将被替换为对应于object的key值。
 
 ---
 #### 使用HtmlWebpackPlugin
@@ -319,7 +319,7 @@ module.exports = config
 
 ```
 
-再次运行 **npm run serve**，则会自动打开**http://127.0.0.1:8888**,即可显示分析webpack打包的文件的大小。
+再次运行 **npm run serve**，则会自动打开 **http://127.0.0.1:8888** ,即可显示分析webpack打包的文件的大小。
 
 ![](mdImage/2022-03-24-15-55-59.png)
 
