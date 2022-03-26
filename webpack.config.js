@@ -1,7 +1,9 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const WebapckBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const config = {
+    mode:"development",
     // entry:"./src/index.js",
     entry:{ // 使用Object来配置多入口
         main:"./src/index.js",
@@ -35,7 +37,8 @@ const config = {
     plugins:[
         new HtmlWebpackPlugin({
             title:"hello webpack", // 对应于生成的html的标题
-        })
+        }),
+        new WebapckBundleAnalyzer(),
     ]
 }
 

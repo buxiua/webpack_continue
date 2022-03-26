@@ -246,3 +246,131 @@ webpack 5.70.0 compiled with 4 warnings in 5543 ms
 ```
 
 当我们修改相关的文件，webpack-dev-server就会自动打包构建。
+
+---
+### 使用webpack-dev-server
+
+在上一个节点中，成功使用webpack-dev-server来对文件进行自动打包构建，但同时也出现了一些警告（warning）
+
+```bash
+Compiled with problems:
+
+WARNING
+
+configuration
+The 'mode' option has not been set, webpack will fallback to 'production' for this value.
+Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
+You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/configuration/mode/
+
+
+WARNING
+
+asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  main.min.js (577 KiB)
+  print.min.js (543 KiB)
+
+
+WARNING
+
+entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+Entrypoints:
+  main (577 KiB)
+      main.min.js
+  print (543 KiB)
+      print.min.js
+
+
+WARNING
+
+webpack performance recommendations: 
+You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+For more info visit https://webpack.js.org/guides/code-splitting/
+
+```
+
+观察第2，3个警告，大概意思是指文件太大，但是反观编写的文件，编写的文件并不大。
+
+使用**webpack-bundle-analyzer**来查看文件的大小.
+
+首先引入依赖
+```bash
+npm i webpack-bundle-analyzer -S
+```
+
+再在**webpack.config.js** 配置文件中引入**webpack-bundle-analyzer**
+
+```javascript
+// webpack.config.js
+...
+const WebapckBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin; // 加载WebpackBundleAnalyzer
+
+const config = {
+    ...
+    plugins:[
+        ...
+        new WebapckBundleAnalyzer(), // 在plugins中使用WebpackBundleAnalyzer
+    ]
+    ...
+}
+
+module.exports = config
+
+```
+
+再次运行 **npm run serve**，则会自动打开**http://127.0.0.1:8888**,即可显示分析webpack打包的文件的大小。
+
+![](mdImage/2022-03-24-15-55-59.png)
+
+可以看到文件其实也并不大，在文件资源查看器中查看打包构建的文件大小
+
+![](mdImage/2022-03-24-16-00-41.png)
+
+也并不大。
+
+在第一个警告中，webpack提示我们没有写mode,将mode加上，设置为**开发** 模式.
+
+```javascript
+// webpack.config.js
+...
+
+const config = {
+    mode:"development", // 设置模式为开发模式
+    ...
+}
+...
+
+```
+
+再次执行 **npm run serve** 来构建打包
+
+```bash
+
+> webpack-demo@1.0.0 serve C:\Users\17947\Desktop\webpackDemo
+> webpack serve --open
+
+<i> [webpack-dev-server] Project is running at:
+<i> [webpack-dev-server] Loopback: http://localhost:8080/
+<i> [webpack-dev-server] On Your Network (IPv4): http://172.27.74.63:8080/
+<i> [webpack-dev-server] On Your Network (IPv6): http://[fe80::c489:a5c7:2749:9a02]:8080/
+<i> [webpack-dev-server] Content not from webpack is served from './dist' directory
+<i> [webpack-dev-middleware] wait until bundle finished: /
+Webpack Bundle Analyzer is started at http://127.0.0.1:8888
+Use Ctrl+C to close it
+assets by path *.js 1.16 MiB
+  asset main.min.js 618 KiB [emitted] (name: main)
+  asset print.min.js 572 KiB [emitted] (name: print)
+asset 5ba24ebe3fc943c0b457.webp 48.2 KiB [emitted] [immutable] [from: src/image/gao.webp] (auxiliary name: main)
+asset index.html 279 bytes [emitted]
+runtime modules 54.1 KiB 24 modules
+javascript modules 174 KiB
+  modules by path ./node_modules/ 170 KiB 30 modules
+  modules by path ./src/ 4.36 KiB
+    modules by path ./src/*.js 432 bytes 2 modules
+    modules by path ./src/css/*.css 3.75 KiB 2 modules
+    modules by path ./src/js/*.js 189 bytes 2 modules
+./src/image/gao.webp 42 bytes (javascript) 48.2 KiB (asset) [built] [code generated]
+webpack 5.70.0 compiled successfully in 1947 ms
+```
+***amazing!!!*** 这次并没有再报警告。
