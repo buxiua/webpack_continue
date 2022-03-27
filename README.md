@@ -374,3 +374,21 @@ javascript modules 174 KiB
 webpack 5.70.0 compiled successfully in 1947 ms
 ```
 ***amazing!!!*** 这次并没有再报警告。
+
+再次查看webpack-bundle-analyzer的分析情况。
+
+![](mdImage/2022-03-27-23-55-12.png)
+
+从图片中可以看出，尽管打包出来的文件很大，达到了173KB左右，但是实际上依赖于我们编写的源文件很少，甚至于在分析图中都没有显示出来。由此可见，应该是依赖于其他模块的文件比较多导致最后打包出来的文件比较大，至于为什么明明没有导入其他模块，为什么还会依赖于其他模块文件呢？ **我也不知道，挖坑ing。。。。。。。。。。。。**
+
+
+回到我们原来的问题，我们使用webpack-dev-server来在文件改变的时候，由该插件自动来进行构建打包，并创建一个服务器，将打包后的文件挂在该服务器上。其实还有两种办法可以实现改变源文件，自动进行打包构建的功能：
+1. 其一是使用 **观察模式** 
+2. 其二是使用 **webpack-dev-middleware**。
+
+ **webpack-dev-middleware** 需要配合express来食用，前面介绍的 **webpack-dev-server** 就使用了该模块, 其实简单的来说，**webpack-dev-server** = **webpack-dev-middleware** + **express** .此处不再对其进行介绍，日常开发中使用 **webpack-dev-server** 就已经够用了，感兴趣的可以 **百度** or **谷歌**。
+
+
+
+
+
