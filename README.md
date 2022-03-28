@@ -63,7 +63,10 @@ module.exports = config
 ---
 #### 清理./dist文件夹
 
-每次 **npm run build**,都会在 <b>./dist</b> 文件夹下面生成打包后的文件。这样多次打包后的 <b>./dist</b> 文件夹下面就会很混乱，或许还会存在我们不需要的文件。最佳实战是每次打包前都清除 <b>./dist</b> 文件夹下面的内容。在配置文件下添加以下内容即可实现。
+每次 **npm run build**,都会在 <b>./dist</b> 文件夹下面生成打包后的文件。这样多次打包后的 <b>./dist</b> 文件夹下面就会很混乱，或许还会存在我们不需要的文件。最佳实战是每次打包前都清除 <b>./dist</b> 文件夹下面的内容。
+
+
+在 **webpack@5.20.0以后的版本**， 在配置文件下添加以下内容即可实现。
 
 
 ```javascript
@@ -88,7 +91,52 @@ module.exports = config
 
 可以在 <b>./dist</b> 文件夹下创建一些无关的文件，再次打包，可以看见 <b>./dist</b> 文件夹下创建的无关文件被删除了。
 
+如果是webpack@5.20.0 以前的版本，如上配置将会报错
+```bash
+# webpack@5.19.0
+G:\data\work\webpack\webpack_continue>npm run build
 
+> webpack-demo@1.0.0 build
+> webpack
+
+[webpack-cli] Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
+ - configuration.output has an unknown property 'clean'. These properties are valid:
+   object { assetModuleFilename?, auxiliaryComment?, charset?, chunkFilename?, chunkFormat?, chunkLoadTimeout?, chunkLoading?, chunkLoadingGlobal?, compareBeforeEmit?, crossOriginLoading?, devtoolFallbackModuleFilenameTemplate?, devtoolModuleFilenameTemplate?, devtoolNamespace?, enabledChunkLoadingTypes?, enabledLibraryTypes?, enabledWasmLoadingTypes?, environment?, filename?, globalObject?, hashDigest?, hashDigestLength?, hashFunction?, hashSalt?, hotUpdateChunkFilename?, hotUpdateGlobal?, hotUpdateMainFilename?, iife?, importFunctionName?, importMetaName?, library?, libraryExport?, libraryTarget?, module?, path?, pathinfo?, publicPath?, scriptType?, sourceMapFilename?, sourcePrefix?, strictModuleExceptionHandling?, umdNamedDefine?, uniqueName?, wasmLoading?, webassemblyModuleFilename?, workerChunkLoading?, workerWasmLoading? }
+   -> Options affecting the output of the compilation. `output` options tell webpack how to write the compiled files to disk.
+```
+
+从上面的报错中可以看到：
+
+ **configuration.output has an unknown property 'clean'**
+
+未知的属性 **clean**,表示webpack并不认识该属性。对 **webpack@5.20.0** 以前的版本，正确的清理 **./dist** 的姿势应该是使用 **clean-webpack-plugin** 。
+
+首先引入 **clean-webpack-plugin**:
+
+```bash
+npm i clean-webpack-plugin -D
+```
+
+接着在webpack.config.js中进行配置使用
+
+```javascript
+// webpack.config.js
+...
+const { CleanWebpackPlugin } = require("clean-webpack-plugin") // 引入 clean-webpack-plugin
+
+const config = {
+  ...
+    plugins:[
+      ...
+      new CleanWebpackPlugin(), // 在plugins中使用CleanWebpackPlugin
+    ]
+}
+
+module.exports = config
+
+```
+
+---
 ## 使用正确的姿势来进行开发
 
 在开发环境中，常常需要做以下的一些配置以便于我们进行更好的开发。
@@ -388,7 +436,31 @@ webpack 5.70.0 compiled successfully in 1947 ms
 
  **webpack-dev-middleware** 需要配合express来食用，前面介绍的 **webpack-dev-server** 就使用了该模块, 其实简单的来说，**webpack-dev-server** = **webpack-dev-middleware** + **express** .此处不再对其进行介绍，日常开发中使用 **webpack-dev-server** 就已经够用了，感兴趣的可以 **百度** or **谷歌**。
 
+---
+#### 杂项
 
+在使用npm工具过程中，我们使用命令 **npm install xxx** 工具来下载模块，且是该模块的 **最新稳定版** ,但是我们并不常常使用最新稳定版，而是下载一个过去的某个版本，这个时候我们便可以使用命令 **npm install xxx@xx.xx.xx** ，其中 ***@*** 后面的 **xx.xx.xx** 代表指定模块的版本号。
 
+使用命令 **npm view xxx version** 来查看 xxx 模块的最新版本
+
+使用命令 **npm view xxx versions** 来查看 xxx 模块的所有版本
+
+```bash
+C:\Users\17947>npm view nrm version
+1.2.5
+
+C:\Users\17947>npm view nrm versions
+[
+  '0.1.0', '0.1.1', '0.1.2',
+  '0.1.4', '0.1.5', '0.1.6',
+  '0.1.7', '0.1.8', '0.1.9',
+  '0.2.0', '0.2.1', '0.2.2',
+  '0.2.3', '0.2.4', '0.2.5',
+  '0.3.0', '0.3.1', '0.9.0',
+  '1.0.0', '1.0.1', '1.0.2',
+  '1.1.0', '1.2.0', '1.2.1',
+  '1.2.3', '1.2.4', '1.2.5'
+]
+```
 
 

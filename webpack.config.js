@@ -1,6 +1,7 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebapckBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { CleanWebpackPlugin } = require("clean-webpack-plugin") // 引入 clean-webpack-plugin
 
 const config = {
     mode:"development",
@@ -13,7 +14,6 @@ const config = {
         // filename:"main.min.js",
         filename:"[name].min.js",
         path:path.resolve(__dirname,"dist"),
-        clean:true
     },
     devtool:"inline-source-map", // 使用source map，更好的定位错误
     devServer:{
@@ -39,6 +39,7 @@ const config = {
             title:"hello webpack", // 对应于生成的html的标题
         }),
         new WebapckBundleAnalyzer(),
+        new CleanWebpackPlugin(), // 在plugins中使用CleanWebpackPlugin
     ]
 }
 
