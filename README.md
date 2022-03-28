@@ -296,7 +296,7 @@ webpack 5.70.0 compiled with 4 warnings in 5543 ms
 当我们修改相关的文件，webpack-dev-server就会自动打包构建。
 
 ---
-### 使用webpack-dev-server
+### 使用webpack-bundle-analyzer
 
 在上一个节点中，成功使用webpack-dev-server来对文件进行自动打包构建，但同时也出现了一些警告（warning）
 
